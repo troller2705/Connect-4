@@ -60,13 +60,13 @@ namespace Connect4
             {
                 
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && playerx >= 100)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && playerx >= 5)
             {
-                playerx -= 100;
+                playerx -= 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && playerx <= 500)
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && playerx <= 600)
             {
-                playerx += 100;
+                playerx += 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             base.Update(gameTime);
