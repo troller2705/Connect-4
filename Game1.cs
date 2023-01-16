@@ -12,7 +12,7 @@ namespace Connect4
 
         Texture2D redTexture, yellowTexture, spaceTexture;
 
-        List<Vector2> redVector2s = new List<Vector2>() { new Vector2(0, 600), new Vector2(100, 600)};
+        List<Vector2> redVector2s = new List<Vector2>();
         List<Vector2> yellowVector2s = new List<Vector2>();
 
         private GraphicsDeviceManager _graphics;
@@ -65,10 +65,30 @@ namespace Connect4
 
             if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "red")
             {
+                playery = 600;
+                while (redVector2s.Contains(new Vector2(playerx, playery)) || yellowVector2s.Contains(new Vector2(playerx, playery)))
+                {
+                    playery -= 100;
+                }
+                if (playery >= 100)
+                {
+                    redVector2s.Add(new Vector2(playerx, playery));
+                }
+                playery = 0;
                 turn = "yellow";
             }
             else if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "yellow")
             {
+                playery = 600;
+                while (redVector2s.Contains(new Vector2(playerx, playery)) || yellowVector2s.Contains(new Vector2(playerx, playery)))
+                {
+                    playery -= 100;
+                }
+                if (playery >= 100)
+                {
+                    yellowVector2s.Add(new Vector2(playerx, playery));
+                }
+                playery = 0;
                 turn = "red";
             }
 
