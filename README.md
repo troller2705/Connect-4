@@ -1,1 +1,1 @@
-# Connect 4 Documentation
+--- # Connect 4 Documentation
