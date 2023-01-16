@@ -10,10 +10,10 @@ namespace Connect4
     {
         KeyboardState ks1, ks2;
 
-        Texture2D redTexture, yellowTexture, spaceTexture, player;
+        Texture2D redTexture, yellowTexture, spaceTexture;
 
-        List<Vector2> redVector2s = new List<Vector2>() { new Vector2(0, 600) };
-        List<Vector2> yellowVector2s = new List<Vector2>() { new Vector2(100, 600) };
+        List<Vector2> redVector2s = new List<Vector2>() { new Vector2(0, 600), new Vector2(100, 600)};
+        List<Vector2> yellowVector2s = new List<Vector2>();
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -24,7 +24,6 @@ namespace Connect4
         float playerx = 0;
         float playery = 0;
         string turn = "red";
-        int redTurns, yellowTurns;
 
         public Game1()
         {
@@ -54,7 +53,6 @@ namespace Connect4
             yellowTexture = Content.Load<Texture2D>("Yellow");
             spaceTexture = Content.Load<Texture2D>("Board");
             turnFont = Content.Load<SpriteFont>("Turn");
-            player = redTexture;
         }
 
         protected override void Update(GameTime gameTime)
@@ -67,11 +65,11 @@ namespace Connect4
 
             if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "red")
             {
-                redTurns++;
+                turn = "yellow";
             }
             else if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "yellow")
             {
-                yellowTurns++;
+                turn = "red";
             }
 
             if (ks1.IsKeyDown(Keys.Left) && ks2.IsKeyUp(Keys.Left) && playerx >= 100)
@@ -86,17 +84,6 @@ namespace Connect4
             ks2 = ks1;
 
             // Credit to Pixi91 for the fix on constant push of keys found here -> https://community.monogame.net/t/delay-after-keyboard-input/10999/2
-
-            
-
-            if (redTurns > yellowTurns)
-            {
-                turn = "yellow";
-            }
-            else
-            {
-                turn = "red";
-            }
 
             base.Update(gameTime);
         }
