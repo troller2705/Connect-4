@@ -8,6 +8,8 @@ namespace Connect4
 {
     public class Game1 : Game
     {
+        KeyboardState ks1, ks2;
+
         Texture2D redTexture, yellowTexture, spaceTexture, player;
 
         List<Vector2> redVector2s = new List<Vector2>() { new Vector2(0, 600) };
@@ -61,22 +63,31 @@ namespace Connect4
                 Exit();
 
             // TODO: Add your update logic here
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && turn == "red")
+            ks1 = Keyboard.GetState();
+
+            if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "red")
             {
-                redTurns += 1;
+                redTurns++;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && turn == "yellow")
+            else if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "yellow")
             {
-                yellowTurns += 1;
+                yellowTurns++;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && playerx >= 5)
+
+            if (ks1.IsKeyDown(Keys.Left) && ks2.IsKeyUp(Keys.Left) && playerx >= 100)
             {
-                playerx -= 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                playerx -= 100;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && playerx <= 600)
+            if (ks1.IsKeyDown(Keys.Right) && ks2.IsKeyUp(Keys.Right) && playerx <= 500)
             {
-                playerx += 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                playerx += 100;
             }
+
+            ks2 = ks1;
+
+            // Credit to Pixi91 for the fix on constant push of keys found here -> https://community.monogame.net/t/delay-after-keyboard-input/10999/2
+
+            
 
             if (redTurns > yellowTurns)
             {
@@ -117,7 +128,7 @@ namespace Connect4
             {
                 _spriteBatch.Draw(yellowTexture, y, Color.White);
             }
-            _spriteBatch.DrawString(turnFont, turn, new Vector2(600, 0), Color.Black);
+            _spriteBatch.DrawString(turnFont, "Turn: " + turn, new Vector2(550, 0), Color.Black);
             _spriteBatch.End();
 
             base.Draw(gameTime);
