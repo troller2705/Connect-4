@@ -37,6 +37,13 @@
 /processorParam:TextureFormat=Color
 /build:Red.png
 
+#begin Test Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Test Font.spritefont;Turn.spritefont
+
 #begin Yellow.png
 /importer:TextureImporter
 /processor:TextureProcessor
