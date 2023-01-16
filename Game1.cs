@@ -24,6 +24,7 @@ namespace Connect4
         float playerx = 0;
         float playery = 0;
         string turn = "red";
+        int redWin, yellowWin, Ties;
 
         public Game1()
         {
