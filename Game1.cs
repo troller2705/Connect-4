@@ -74,9 +74,9 @@ namespace Connect4
                 if (playery >= 100)
                 {
                     redVector2s.Add(new Vector2(playerx, playery));
+                    turn = "yellow";
                 }
                 playery = 0;
-                turn = "yellow";
             }
             else if (ks1.IsKeyDown(Keys.Down) && ks2.IsKeyUp(Keys.Down) && turn == "yellow")
             {
@@ -88,9 +88,9 @@ namespace Connect4
                 if (playery >= 100)
                 {
                     yellowVector2s.Add(new Vector2(playerx, playery));
+                    turn = "red";
                 }
                 playery = 0;
-                turn = "red";
             }
 
             if (ks1.IsKeyDown(Keys.Left) && ks2.IsKeyUp(Keys.Left) && playerx >= 100)
