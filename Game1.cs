@@ -24,6 +24,7 @@ namespace Connect4
         float playerx = 0;
         float playery = 0;
         string turn = "red";
+        int spacesUsed;
         int redWin, yellowWin, Ties;
 
         public Game1()
@@ -74,6 +75,7 @@ namespace Connect4
                 if (playery >= 100)
                 {
                     redVector2s.Add(new Vector2(playerx, playery));
+                    spacesUsed++;
                     turn = "yellow";
                 }
                 playery = 0;
@@ -88,6 +90,7 @@ namespace Connect4
                 if (playery >= 100)
                 {
                     yellowVector2s.Add(new Vector2(playerx, playery));
+                    spacesUsed++;
                     turn = "red";
                 }
                 playery = 0;
@@ -107,6 +110,18 @@ namespace Connect4
             // Credit to Pixi91 for the fix on constant push of keys found here -> https://community.monogame.net/t/delay-after-keyboard-input/10999/2
 
             base.Update(gameTime);
+            // Tie/Stalemate
+            if (spacesUsed >= 42)
+            {
+                Ties++;
+                redVector2s.Clear();
+                yellowVector2s.Clear();
+                spacesUsed = 0;
+            }
+            CheckForWin();
+
+
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -136,10 +151,102 @@ namespace Connect4
             {
                 _spriteBatch.Draw(yellowTexture, y, Color.White);
             }
-            _spriteBatch.DrawString(turnFont, "Turn: " + turn, new Vector2(550, 0), Color.Black);
+            _spriteBatch.DrawString(turnFont, "Red wins: " + redWin, new Vector2(100, 0), Color.Black);
+            _spriteBatch.DrawString(turnFont, "Ties: " + Ties, new Vector2(300, 0), Color.Black);
+            _spriteBatch.DrawString(turnFont, "Yellow wins: " + yellowWin, new Vector2(500, 0), Color.Black);
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+        private bool CheckForWin()
+        {
+            // Check horizontal win
+            for (int y = 600; y >= 100; y -= 100)
+            {
+                for (int x = 0; x <= 400; x += 100)
+                {
+                    if (redVector2s.Contains(new Vector2(x, y)) && redVector2s.Contains(new Vector2(x + 100, y)) && redVector2s.Contains(new Vector2(x + 200, y)) && redVector2s.Contains(new Vector2(x + 300, y)))
+                    { 
+                        redWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                    if (yellowVector2s.Contains(new Vector2(x, y)) && yellowVector2s.Contains(new Vector2(x + 100, y)) && yellowVector2s.Contains(new Vector2(x + 200, y)) && yellowVector2s.Contains(new Vector2(x + 300, y)))
+                    {
+                        yellowWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                }
+            }
+            // Check vertical win
+            for (int x = 0; x <= 600; x += 100)
+            {
+                for (int y = 600; y >= 100; y -= 100)
+                {
+                    if (redVector2s.Contains(new Vector2(x, y)) && redVector2s.Contains(new Vector2(x, y - 100)) && redVector2s.Contains(new Vector2(x, y - 200)) && redVector2s.Contains(new Vector2(x, y - 300)))
+                    {
+                        redWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                    if (yellowVector2s.Contains(new Vector2(x, y)) && yellowVector2s.Contains(new Vector2(x, y - 100)) && yellowVector2s.Contains(new Vector2(x, y - 200)) && yellowVector2s.Contains(new Vector2(x, y - 300)))
+                    {
+                        yellowWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                }
+            }
+            // Check diagonal win (top-left to bottom-right)
+            for (int x = 0; x <= 400; x += 100)
+            {
+                for (int y = 600; y >= 300; y -= 100)
+                {
+                    if (redVector2s.Contains(new Vector2(x, y)) && redVector2s.Contains(new Vector2(x + 100, y - 100)) && redVector2s.Contains(new Vector2(x + 200, y - 200)) && redVector2s.Contains(new Vector2(x + 300, y - 300)))
+                    {
+                        redWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                    if (yellowVector2s.Contains(new Vector2(x, y)) && yellowVector2s.Contains(new Vector2(x + 100, y - 100)) && yellowVector2s.Contains(new Vector2(x + 200, y - 200)) && yellowVector2s.Contains(new Vector2(x + 300, y - 300)))
+                    {
+                        yellowWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                }
+            }
+            // Check diagonal win (top-right to bottom-left)
+            for (int x = 600; x >= 200; x -= 100)
+            {
+                for (int y = 600; y >= 300; y -= 100)
+                {
+                    if (redVector2s.Contains(new Vector2(x, y)) && redVector2s.Contains(new Vector2(x - 100, y - 100)) && redVector2s.Contains(new Vector2(x - 200, y - 200)) && redVector2s.Contains(new Vector2(x - 300, y - 300)))
+                    {
+                        redWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                    if (yellowVector2s.Contains(new Vector2(x, y)) && yellowVector2s.Contains(new Vector2(x - 100, y - 100)) && yellowVector2s.Contains(new Vector2(x - 200, y - 200)) && yellowVector2s.Contains(new Vector2(x - 300, y - 300)))
+                    {
+                        yellowWin++;
+                        redVector2s.Clear();
+                        yellowVector2s.Clear();
+                        spacesUsed = 0;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }
