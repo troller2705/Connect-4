@@ -119,9 +119,6 @@ namespace Connect4
                 spacesUsed = 0;
             }
             CheckForWin();
-
-
-
         }
 
         protected override void Draw(GameTime gameTime)
