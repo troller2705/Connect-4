@@ -118,6 +118,7 @@ namespace Connect4
                 yellowVector2s.Clear();
                 spacesUsed = 0;
             }
+            // win check
             CheckForWin();
         }
 
