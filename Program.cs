@@ -1,3 +1,3 @@
 ﻿
-using var game = new Connect4.Game1();
+using var game = new Connect4.Menu();
 game.Run();
